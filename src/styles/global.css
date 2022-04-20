@@ -9,6 +9,7 @@ body {
   background: #312e38;
   color: #fff;
   -webkit-font-smoothing: antialiased;
+  
 }
 
 body,
@@ -28,4 +29,50 @@ strong {
 
 button {
   cursor: pointer;
+}
+
+header {
+  padding: 12px 0;
+  background-color: #28262e;
+  border-bottom: 1px solid #38363b;
+}
+
+.headerContent {
+  align-items: center;
+  display: flex;
+
+  max-width: 1120px;
+  margin: 0 auto;
+
+  /* justify-content: center; */
+}
+
+.logo {
+  color: #ff9000;
+  font-size: 30px;
+  font-weight: bold;
+  padding-right: 30px;
+  margin-right: 20px;
+
+  border-right: 1px solid #3a393d;
+  /* border-left: #ff9000; */
+}
+
+.headerButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 90px;
+  height: 30px;
+  margin: 0 10px;
+  padding: 20px;
+
+  background-color: #252429;
+  color: #fff;
+  font-size: 18px;
+  font-weight: bold;
+  text-decoration: none;
+
+  border-radius: 5px;
 }
