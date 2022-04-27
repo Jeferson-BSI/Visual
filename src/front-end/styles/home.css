@@ -148,3 +148,14 @@
   color: #fff;
   font-size: 20px;
 }
+
+input {
+  align-items: center;
+
+  color: #ff9000;
+  background: #232129;
+
+  padding: 10px;
+  border-radius: 10px;
+  border: 2px solid #232323;
+}

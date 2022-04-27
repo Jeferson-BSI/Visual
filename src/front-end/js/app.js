@@ -18,12 +18,47 @@ const name = document.getElementById('name');
 const morning = document.getElementById('morning');
 const afternoon = document.getElementById('afternoon');
 
+function handleRequest() {
+  axios
+    .get(`http://localhost:3333/schedules/?date=${`27-04-22`}`)
+    .then(function (response) {
+      console.log(response);
+      const schedules = response.data;
+
+      schedules.sort(function (a, b) {
+        if (Number(a.time.split(':')[0]) < Number(b.time.split(':')[0])) {
+          return -1;
+        } else {
+          return true;
+        }
+      });
+
+      const next = schedules.filter(function (schedule) {
+        const hours = Number(schedule.time.split(':')[0]);
+        const minutes = Number(schedule.time.split(':')[1]);
+        if (hours == Number(date.getHours())) {
+          return minutes > Number(date.getMinutes());
+        }
+
+        return hours > Number(date.getHours());
+      });
+
+      nextSchedule(next[0]);
+      schedules.forEach((schedule) => handleSchedule(schedule));
+    });
+}
+
+handleRequest();
+
+function nextSchedule(schedule) {
+  name.innerHTML = schedule.name;
+  time.innerHTML += schedule.time;
+}
+
 day.innerHTML = weekday[date.getDay()];
-month.innerHTML += String(date.getMonth() + 1).padStart(2, '0');
+month.innerHTML += String(date.getDate()).padStart(2, '0');
 
 // Next Appointment
-name.innerHTML = 'Hester Malone';
-time.innerHTML += '09:00';
 
 const schedules = [
   {
@@ -121,4 +156,14 @@ function handleSchedule(schedule) {
             </div>`;
 }
 
-schedules.forEach((schedule) => handleSchedule(schedule));
+// schedules.forEach((schedule) => handleSchedule(schedule));
+
+const pickDate = flatpickr('#date', {
+  locale: 'pt',
+  minDate: 'today',
+  maxDate: new Date().fp_incr(30),
+  altInput: true,
+  altFormat: 'j F, Y',
+  dateFormat: 'd-m-y',
+  inline: true,
+});
