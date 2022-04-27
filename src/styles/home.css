@@ -1,47 +1,5 @@
-header {
-  padding: 12px 0;
-  background-color: #28262e;
-  border-bottom: 1px solid #38363b;
-}
-
-.headerContent {
-  align-items: center;
-  display: flex;
-
-  max-width: 1120px;
-  margin: 0 auto;
-
-  /* justify-content: center; */
-}
-
-.logo {
-  color: #ff9000;
-  font-size: 30px;
-  font-weight: bold;
-  padding-right: 30px;
-  margin-right: 20px;
-
-  border-right: 1px solid #3a393d;
-  /* border-left: #ff9000; */
-}
-
-.headerButton {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  width: 90px;
-  height: 30px;
-  margin: 0 10px;
-  padding: 20px;
-
-  background-color: #252429;
-  color: #fff;
-  font-size: 18px;
-  font-weight: bold;
-  text-decoration: none;
-
-  border-radius: 5px;
+.container {
+  margin-top: 100px;
 }
 
 .content {
@@ -82,7 +40,7 @@ header {
 }
 
 .nextAppointment {
-  margin-top: 64px;
+  margin-top: 30px;
 }
 
 .nextAppointment > strong {
@@ -95,9 +53,9 @@ header {
   background: #3e3b47;
   display: flex;
   align-items: center;
-  padding: 16px 24px;
+  padding: 10px 24px;
   border-radius: 10px;
-  margin-top: 24px;
+  margin-top: 15px;
   position: relative;
 }
 
@@ -135,7 +93,7 @@ header {
 }
 
 .schedule section {
-  margin-top: 40px;
+  margin-top: 30px;
 }
 
 .schedule section > strong {

@@ -7,6 +7,8 @@
     <title>Visual</title>
     <link rel="stylesheet" href="../styles/global.css" />
     <link rel="stylesheet" href="../styles/schedule.css" />
+    <link rel="stylesheet" href="../styles/navBar.css" />
+
     <link
       href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;600&display=swap"
       rel="stylesheet"
@@ -23,15 +25,30 @@
           <strong>Visual</strong>
         </div>
 
-        <a class="headerButton" href="/app.html"><span>Home</span></a>
-        <a class="headerButton" href="./schedule.html"><span>Agendar</span></a>
+        <div class="menu">
+          <input type="checkbox" id="menu-bar" />
+          <label for="menu-bar">Menu</label>
+        </div>
+        <div class="navbar">
+          <ul>
+            <li>
+              <a class="headerButton" href="/app.html"><span>Home</span></a>
+            </li>
+            <li>
+              <a class="headerButton" href="./schedule.html"
+                ><span>Agendar</span></a
+              >
+            </li>
+          </ul>
+        </div>
       </div>
     </header>
 
     <div class="container">
       <div class="content">
-        <form action="">
+        <form action="" method="post">
           <h1>Criar Agendamento</h1>
+
           <div class="containerInput">
             <input
               type="text"
@@ -41,6 +58,7 @@
               required
             />
           </div>
+
           <div class="containerInput">
             <input
               type="time"
@@ -52,21 +70,24 @@
               required
             />
           </div>
+
           <div class="containerInput">
             <input
-              type="date"
+              type="time"
               name="date"
               id="date"
               placeholder="Data"
               required
             />
           </div>
+
           <div class="containerInput">
             <input
               type="text"
               name="type"
               id="type"
               placeholder="Tipo"
+              value=""
               required
             />
           </div>
@@ -84,37 +105,7 @@
       href="https://npmcdn.com/flatpickr/dist/themes/dark.css"
     />
 
-    <script>
-      const bt = document.getElementById('agendar')
-      var fullDate
-      var hour = []
-
-      const pickDate = flatpickr('#date', {
-        locale: 'pt',
-        minDate: 'today',
-        maxDate: new Date().fp_incr(30),
-        altInput: true,
-        altFormat: 'j F, Y',
-        dateFormat: 'd-m-y'
-      })
-
-      const pickTime = flatpickr('#time', {
-        locale: 'pt',
-        enableTime: true,
-        noCalendar: true,
-        dateFormat: 'H:i',
-        time_24hr: true,
-        defaultDate: '8:45'
-      })
-
-      bt.addEventListener('click', function (event) {
-        event.preventDefault()
-        pickDate.selectedDates.forEach(function (date) {
-          fullDate = `${date.getMonth()} ${date.getDate()} ${date.getFullYear()}`
-        })
-
-        alert(fullDate)
-      })
-    </script>
+    <script src="../js/schedule.js"></script>
+    <script src="../js/validation.js"></script>
   </body>
 </html>
