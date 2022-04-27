@@ -89,7 +89,9 @@ function handleSchedule(schedule) {
 
 function handleRequest(data) {
   axios
-    .get(`http://localhost:3333/schedules/?date=${data}`)
+    .get(
+      `https://visual-web-1.herokuapp.com/schedules/?date=${data}`,
+    )
     .then(function (response) {
       console.log(response);
       const schedules = response.data;

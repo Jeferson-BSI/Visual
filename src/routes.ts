@@ -26,7 +26,7 @@ router.post('/schedules', async (req: Request, res: Response) => {
   return res.status(200).json(dados);
 });
 
-router.get('/schedules/', async (req: Request, res: Response) => {
+router.get('/schedules', async (req: Request, res: Response) => {
   const { date } = req.query;
 
   if (!date) {
