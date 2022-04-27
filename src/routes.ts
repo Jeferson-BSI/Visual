@@ -29,6 +29,11 @@ router.post('/schedules', async (req: Request, res: Response) => {
 router.get('/schedules/', async (req: Request, res: Response) => {
   const { date } = req.query;
 
+  if (!date) {
+    const data = await client.schedules.findMany();
+    return res.status(200).json(data);
+  }
+
   const data = await client.schedules.findMany({
     where: {
       date: `${date}`,

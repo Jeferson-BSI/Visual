@@ -1,3 +1,16 @@
+const day = document.getElementById('day');
+const month = document.getElementById('month');
+
+const time = document.getElementById('time');
+const name = document.getElementById('name');
+const dateInput = document.getElementById('date');
+
+const today = document.getElementById('today');
+
+const morning = document.getElementById('morning');
+const afternoon = document.getElementById('afternoon');
+
+const date = new Date();
 const weekday = {
   0: 'Domingo',
   1: 'Segunda-feira',
@@ -7,97 +20,15 @@ const weekday = {
   5: 'Sexta-feira',
   6: 'Sábado-feira',
 };
-
-const date = new Date();
-
-const day = document.getElementById('day');
-const month = document.getElementById('month');
-
-const time = document.getElementById('time');
-const name = document.getElementById('name');
-const morning = document.getElementById('morning');
-const afternoon = document.getElementById('afternoon');
-
-function handleRequest() {
-  axios
-    .get(`http://localhost:3333/schedules/?date=${`27-04-22`}`)
-    .then(function (response) {
-      console.log(response);
-      const schedules = response.data;
-
-      schedules.sort(function (a, b) {
-        if (Number(a.time.split(':')[0]) < Number(b.time.split(':')[0])) {
-          return -1;
-        } else {
-          return true;
-        }
-      });
-
-      const next = schedules.filter(function (schedule) {
-        const hours = Number(schedule.time.split(':')[0]);
-        const minutes = Number(schedule.time.split(':')[1]);
-        if (hours == Number(date.getHours())) {
-          return minutes > Number(date.getMinutes());
-        }
-
-        return hours > Number(date.getHours());
-      });
-
-      nextSchedule(next[0]);
-      schedules.forEach((schedule) => handleSchedule(schedule));
-    });
-}
-
-handleRequest();
-
-function nextSchedule(schedule) {
-  name.innerHTML = schedule.name;
-  time.innerHTML += schedule.time;
-}
+// alert(String(date.getMonth()).padStart(2, '0'));
 
 day.innerHTML = weekday[date.getDay()];
 month.innerHTML += String(date.getDate()).padStart(2, '0');
 
-// Next Appointment
-
-const schedules = [
-  {
-    name: 'Charles Becker',
-    time: '08:30',
-    date: new Date(),
-    type: 'barba',
-  },
-  {
-    name: 'Brent Wilkins',
-    time: '09:30',
-    date: new Date(),
-    type: 'barba',
-  },
-  {
-    name: 'Lela Dixon',
-    time: '10:30',
-    date: new Date(),
-    type: 'barba',
-  },
-  {
-    name: 'Lucy Peterson',
-    time: '14:30',
-    date: new Date(),
-    type: 'barba',
-  },
-  {
-    name: 'Gabriel Horton',
-    time: '13:30',
-    date: new Date(),
-    type: 'barba',
-  },
-  {
-    name: 'Minerva Lopez',
-    time: '15:30',
-    date: new Date(),
-    type: 'barba',
-  },
-];
+const formatDate = (date) =>
+  `${date.getDate()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(
+    date.getFullYear(),
+  ).substring(2)}`;
 
 function handleSchedule(schedule) {
   if (Number(schedule.time.split(':')[0]) < 12) {
@@ -156,7 +87,95 @@ function handleSchedule(schedule) {
             </div>`;
 }
 
-// schedules.forEach((schedule) => handleSchedule(schedule));
+function handleRequest(data) {
+  axios
+    .get(`http://localhost:3333/schedules/?date=${data}`)
+    .then(function (response) {
+      console.log(response);
+      const schedules = response.data;
+
+      schedules.sort(function (a, b) {
+        if (Number(a.time.split(':')[0]) < Number(b.time.split(':')[0])) {
+          return -1;
+        } else {
+          return true;
+        }
+      });
+
+      const next = schedules.filter(function (schedule) {
+        const hours = Number(schedule.time.split(':')[0]);
+        const minutes = Number(schedule.time.split(':')[1]);
+        if (hours == Number(date.getHours())) {
+          return minutes > Number(date.getMinutes());
+        }
+
+        return hours > Number(date.getHours());
+      });
+
+      if (next.length) {
+        nextSchedule(next[0]);
+      } else {
+        nextSchedule({ name: '----------', time: '00:00' });
+      }
+
+      if (data == formatDate(date)) {
+        today.classList.remove('today');
+      } else {
+        today.classList.add('today');
+      }
+
+      afternoon.innerHTML = '';
+      morning.innerHTML = '';
+      schedules.forEach((schedule) => handleSchedule(schedule));
+    });
+}
+
+// Next Appointment
+function nextSchedule(schedule) {
+  name.innerHTML = schedule.name;
+  time.innerHTML = schedule.time;
+}
+
+handleRequest(formatDate(date));
+
+const schedules = [
+  {
+    name: 'Charles Becker',
+    time: '08:30',
+    date: new Date(),
+    type: 'barba',
+  },
+  {
+    name: 'Brent Wilkins',
+    time: '09:30',
+    date: new Date(),
+    type: 'barba',
+  },
+  {
+    name: 'Lela Dixon',
+    time: '10:30',
+    date: new Date(),
+    type: 'barba',
+  },
+  {
+    name: 'Lucy Peterson',
+    time: '14:30',
+    date: new Date(),
+    type: 'barba',
+  },
+  {
+    name: 'Gabriel Horton',
+    time: '13:30',
+    date: new Date(),
+    type: 'barba',
+  },
+  {
+    name: 'Minerva Lopez',
+    time: '15:30',
+    date: new Date(),
+    type: 'barba',
+  },
+];
 
 const pickDate = flatpickr('#date', {
   locale: 'pt',
@@ -166,4 +185,7 @@ const pickDate = flatpickr('#date', {
   altFormat: 'j F, Y',
   dateFormat: 'd-m-y',
   inline: true,
+  onChange: function (selectedDates, dateStr, instance) {
+    handleRequest(dateInput.value, true);
+  },
 });
