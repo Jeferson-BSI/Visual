@@ -157,8 +157,6 @@ function handleSchedule(schedule, index) {
             </div>`;
 }
 
-// http://localhost:3333/schedules
-// https://visual-web-1.herokuapp.com/schedules/?date=${data}
 function handleNextSchedule(schedules) {
   const next = schedules.filter(function (schedule) {
     const hours = Number(schedule.time.split(':')[0]);
@@ -177,64 +175,60 @@ function handleNextSchedule(schedules) {
   }
 }
 
+// var url = 'http://localhost:3333/schedules/';
+var url = 'https://visual-web-1.herokuapp.com/schedules/';
 function handleRequest(data) {
-  axios
-    .get(`https://visual-web-1.herokuapp.com/schedules/?date=${data}`)
-    .then(function (response) {
-      console.log(response);
-      const schedules = response.data;
+  axios.get(url + `?date=${data}`).then(function (response) {
+    console.log(response);
+    const schedules = response.data;
 
-      schedules.sort(function (a, b) {
-        if (Number(a.time.split(':')[0]) < Number(b.time.split(':')[0])) {
+    schedules.sort(function (a, b) {
+      if (Number(a.time.split(':')[0]) < Number(b.time.split(':')[0])) {
+        return -1;
+      } else if (Number(a.time.split(':')[0]) == Number(b.time.split(':')[0])) {
+        if (Number(a.time.split(':')[1]) < Number(b.time.split(':')[1])) {
           return -1;
-        } else if (
-          Number(a.time.split(':')[0]) == Number(b.time.split(':')[0])
-        ) {
-          if (Number(a.time.split(':')[1]) < Number(b.time.split(':')[1])) {
-            return -1;
-          }
         }
-        return true;
-      });
-
-      handleNextSchedule(schedules);
-
-      if (data == formatDate(date)) {
-        today.classList.remove('today');
-      } else {
-        today.classList.add('today');
       }
-
-      globalSchedules = schedules;
-
-      afternoon.innerHTML = '';
-      morning.innerHTML = '';
-      schedules.forEach((schedule, index) => handleSchedule(schedule, index));
+      return true;
     });
+
+    handleNextSchedule(schedules);
+
+    if (data == formatDate(date)) {
+      today.classList.remove('today');
+    } else {
+      today.classList.add('today');
+    }
+
+    globalSchedules = schedules;
+
+    afternoon.innerHTML = '';
+    morning.innerHTML = '';
+    schedules.forEach((schedule, index) => handleSchedule(schedule, index));
+  });
 }
 
 // Delete Schedule
 function handleDelete(index, f = false) {
-  const schedule = document.getElementById(index);
-  if (!index) {
+  if (index === null || index === undefined) {
     return;
   }
-  axios
-    .delete(
-      `https://visual-web-1.herokuapp.com/schedules/${globalSchedules[index].id}`,
-    )
-    .then(function (response) {
-      console.log(response);
-      globalSchedules.pop(index);
 
-      f ? afternoon.removeChild(schedule) : morning.removeChild(schedule);
+  axios.delete(url + `${globalSchedules[index].id}`).then(function (response) {
+    console.log(response);
+    alert(index);
+    globalSchedules.splice(index, 1);
 
-      handleNextSchedule(globalSchedules);
-    });
-  afternoon.innerHTML = '';
-  morning.innerHTML = '';
+    handleNextSchedule(globalSchedules);
 
-  globalSchedules.forEach((schedule, index) => handleSchedule(schedule, index));
+    afternoon.innerHTML = '';
+    morning.innerHTML = '';
+
+    globalSchedules.forEach((schedule, index) =>
+      handleSchedule(schedule, index),
+    );
+  });
 }
 
 // Next Appointment

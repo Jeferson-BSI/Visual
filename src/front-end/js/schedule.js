@@ -50,9 +50,12 @@ const pickTime = flatpickr('#time', {
 });
 ///http://localhost:3333/schedules'
 // https://visual-web-1.herokuapp.com/schedules
+// var url = 'http://localhost:3333/schedules/';
+var url = 'https://visual-web-1.herokuapp.com/schedules';
+
 function handleRequest() {
   axios
-    .post('https://visual-web-1.herokuapp.com/schedules', {
+    .post(url, {
       name: name.value,
       type: type.value,
       time: time.value,
