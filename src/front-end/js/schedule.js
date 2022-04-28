@@ -52,7 +52,7 @@ const pickTime = flatpickr('#time', {
 // https://visual-web-1.herokuapp.com/schedules
 function handleRequest() {
   axios
-    .post('https://visual-web-1.herokuapp.com/schedules', {
+    .post('http://localhost:3333/schedules', {
       name: name.value,
       type: type.value,
       time: time.value,
@@ -74,19 +74,21 @@ bt.addEventListener('click', function (event) {
   event.preventDefault();
 
   if (name.value && name.value && time.value && date.value) {
-    if (Number(time.value.split(':')[0]) <= Number(h.getHours())) {
-      time.classList.remove('valid');
-      time.classList.add('inputError');
-      tooltip.innerHTML = 'Horário Invalido';
-      tooltip.classList.add('tooltipVisible');
-      tooltip.classList.add('erro');
+    if (Number(date.value.split(':')[0]) == Number(h.getDate())) {
+      if (Number(time.value.split(':')[0]) <= Number(h.getHours())) {
+        time.classList.remove('valid');
+        time.classList.add('inputError');
+        tooltip.innerHTML = 'Horário Invalido';
+        tooltip.classList.add('tooltipVisible');
+        tooltip.classList.add('erro');
 
-      setTimeout(function () {
-        tooltip.classList.remove('tooltipVisible');
-        tooltip.classList.remove('erro');
-        tooltip.innerHTML = 'Success';
-      }, 2000);
-      return;
+        setTimeout(function () {
+          tooltip.classList.remove('tooltipVisible');
+          tooltip.classList.remove('erro');
+          tooltip.innerHTML = 'Success';
+        }, 2000);
+        return;
+      }
     }
     handleRequest();
   } else {

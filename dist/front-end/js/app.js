@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 const day = document.getElementById('day');
 const month = document.getElementById('month');
@@ -16,13 +16,16 @@ const weekday = {
   3: 'Quarta-feira',
   4: 'Quinta-feira',
   5: 'Sexta-feira',
-  6: 'Sábado-feira'
+  6: 'Sábado-feira',
 }; // alert(String(date.getMonth()).padStart(2, '0'));
 
 day.innerHTML = weekday[date.getDay()];
 month.innerHTML += String(date.getDate()).padStart(2, '0');
 
-const formatDate = date => `${date.getDate()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getFullYear()).substring(2)}`;
+const formatDate = (date) =>
+  `${date.getDate()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(
+    date.getFullYear(),
+  ).substring(2)}`;
 
 function handleSchedule(schedule) {
   if (Number(schedule.time.split(':')[0]) < 12) {
@@ -82,54 +85,56 @@ function handleSchedule(schedule) {
 } // http://localhost:3333/schedules
 // https://visual-web-1.herokuapp.com/schedules/?date=${data}
 
-
 function handleRequest(data) {
-  axios.get(`https://visual-web-1.herokuapp.com/schedules/?date=${data}`).then(function (response) {
-    console.log(response);
-    const schedules = response.data;
-    schedules.sort(function (a, b) {
-      if (Number(a.time.split(':')[0]) < Number(b.time.split(':')[0])) {
-        return -1;
-      } else if (Number(a.time.split(':')[0]) == Number(b.time.split(':')[0])) {
-        if (Number(a.time.split(':')[1]) < Number(b.time.split(':')[1])) {
+  axios
+    .get(`https://visual-web-1.herokuapp.com/schedules/?date=${data}`)
+    .then(function (response) {
+      console.log(response);
+      const schedules = response.data;
+      schedules.sort(function (a, b) {
+        if (Number(a.time.split(':')[0]) < Number(b.time.split(':')[0])) {
           return -1;
+        } else if (
+          Number(a.time.split(':')[0]) == Number(b.time.split(':')[0])
+        ) {
+          if (Number(a.time.split(':')[1]) < Number(b.time.split(':')[1])) {
+            return -1;
+          }
         }
-      }
 
-      return true;
-    });
-    const next = schedules.filter(function (schedule) {
-      const hours = Number(schedule.time.split(':')[0]);
-      const minutes = Number(schedule.time.split(':')[1]);
-
-      if (hours == Number(date.getHours())) {
-        return minutes > Number(date.getMinutes());
-      }
-
-      return hours > Number(date.getHours());
-    });
-
-    if (next.length) {
-      nextSchedule(next[0]);
-    } else {
-      nextSchedule({
-        name: '----------',
-        time: '00:00'
+        return true;
       });
-    }
+      const next = schedules.filter(function (schedule) {
+        const hours = Number(schedule.time.split(':')[0]);
+        const minutes = Number(schedule.time.split(':')[1]);
 
-    if (data == formatDate(date)) {
-      today.classList.remove('today');
-    } else {
-      today.classList.add('today');
-    }
+        if (hours == Number(date.getHours())) {
+          return minutes > Number(date.getMinutes());
+        }
 
-    afternoon.innerHTML = '';
-    morning.innerHTML = '';
-    schedules.forEach(schedule => handleSchedule(schedule));
-  });
+        return hours > Number(date.getHours());
+      });
+
+      if (next.length) {
+        nextSchedule(next[0]);
+      } else {
+        nextSchedule({
+          name: '----------',
+          time: '00:00',
+        });
+      }
+
+      if (data == formatDate(date)) {
+        today.classList.remove('today');
+      } else {
+        today.classList.add('today');
+      }
+
+      afternoon.innerHTML = '';
+      morning.innerHTML = '';
+      schedules.forEach((schedule) => handleSchedule(schedule));
+    });
 } // Next Appointment
-
 
 function nextSchedule(schedule) {
   name.innerHTML = schedule.name;
@@ -137,37 +142,44 @@ function nextSchedule(schedule) {
 }
 
 handleRequest(formatDate(date));
-const schedules = [{
-  name: 'Charles Becker',
-  time: '08:30',
-  date: new Date(),
-  type: 'barba'
-}, {
-  name: 'Brent Wilkins',
-  time: '09:30',
-  date: new Date(),
-  type: 'barba'
-}, {
-  name: 'Lela Dixon',
-  time: '10:30',
-  date: new Date(),
-  type: 'barba'
-}, {
-  name: 'Lucy Peterson',
-  time: '14:30',
-  date: new Date(),
-  type: 'barba'
-}, {
-  name: 'Gabriel Horton',
-  time: '13:30',
-  date: new Date(),
-  type: 'barba'
-}, {
-  name: 'Minerva Lopez',
-  time: '15:30',
-  date: new Date(),
-  type: 'barba'
-}];
+const schedules = [
+  {
+    name: 'Charles Becker',
+    time: '08:30',
+    date: new Date(),
+    type: 'barba',
+  },
+  {
+    name: 'Brent Wilkins',
+    time: '09:30',
+    date: new Date(),
+    type: 'barba',
+  },
+  {
+    name: 'Lela Dixon',
+    time: '10:30',
+    date: new Date(),
+    type: 'barba',
+  },
+  {
+    name: 'Lucy Peterson',
+    time: '14:30',
+    date: new Date(),
+    type: 'barba',
+  },
+  {
+    name: 'Gabriel Horton',
+    time: '13:30',
+    date: new Date(),
+    type: 'barba',
+  },
+  {
+    name: 'Minerva Lopez',
+    time: '15:30',
+    date: new Date(),
+    type: 'barba',
+  },
+];
 const pickDate = flatpickr('#date', {
   locale: 'pt',
   minDate: 'today',
@@ -178,5 +190,9 @@ const pickDate = flatpickr('#date', {
   inline: true,
   onChange: function (selectedDates, dateStr, instance) {
     handleRequest(dateInput.value, true);
-  }
+  },
 });
+
+function handleDelete() {
+  alert('Delete');
+}

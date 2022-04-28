@@ -19,14 +19,14 @@ yarn install ou npm install
 Realize um clone do repositório e abre a pasta:
 
 ```bash
-git clone https://github.com/BrenndonCJ/DownTube/
+git clone https://github.com/Jeferson-BSI/Visual.git
 cd visual
 ```
 
 Execute `dist/server.js`:
 
 ```bash
-node start
+yarn start ou node start ou node dist/server.js
 ```
 
 Um servidor será aberto na porta 3333 da sua máquina, bastando apenas acessar http://localhost:3333.

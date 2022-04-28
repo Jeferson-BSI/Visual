@@ -27,3 +27,42 @@
 // // button.addEventListener('click', function (event) {
 
 // // });
+
+const schedules = [
+  {
+    name: 'Charles Becker',
+    time: '08:30',
+    date: new Date(),
+    type: 'barba',
+  },
+  {
+    name: 'Brent Wilkins',
+    time: '09:30',
+    date: new Date(),
+    type: 'barba',
+  },
+  {
+    name: 'Lela Dixon',
+    time: '10:30',
+    date: new Date(),
+    type: 'barba',
+  },
+  {
+    name: 'Lucy Peterson',
+    time: '14:30',
+    date: new Date(),
+    type: 'barba',
+  },
+  {
+    name: 'Gabriel Horton',
+    time: '13:30',
+    date: new Date(),
+    type: 'barba',
+  },
+  {
+    name: 'Minerva Lopez',
+    time: '15:30',
+    date: new Date(),
+    type: 'barba',
+  },
+];

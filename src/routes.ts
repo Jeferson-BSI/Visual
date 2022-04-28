@@ -49,4 +49,16 @@ router.get('/schedules', async (req: Request, res: Response) => {
   return res.status(200).json(data);
 });
 
+router.delete('/schedules/:id', async (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  const schedule = await client.schedules.findUnique({ where: { id } });
+
+  if (!schedule) {
+    return res.status(400).json({ Message: 'No schedule found' });
+  }
+  await client.schedules.delete({ where: { id } });
+
+  return res.status(200).json();
+});
 export { router };

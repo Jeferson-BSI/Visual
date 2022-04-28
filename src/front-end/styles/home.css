@@ -148,6 +148,25 @@
   color: #fff;
   font-size: 20px;
 }
+.appointment button {
+  background: transparent;
+  border: none;
+  padding: 0;
+  text-align: center;
+}
+
+.appointment button {
+  background: transparent;
+  /* background: #fff; */
+  border: none;
+  padding: 0;
+  /* text-align: center; */
+}
+
+.appointment button svg {
+  color: #f7a539;
+  margin: 0;
+}
 
 input {
   align-items: center;
