@@ -86,12 +86,11 @@ function handleSchedule(schedule) {
               </div>
             </div>`;
 }
-
+// http://localhost:3333/schedules
+// https://visual-web-1.herokuapp.com/schedules/?date=${data}
 function handleRequest(data) {
   axios
-    .get(
-      `https://visual-web-1.herokuapp.com/schedules/?date=${data}`,
-    )
+    .get(`https://visual-web-1.herokuapp.com/schedules/?date=${data}`)
     .then(function (response) {
       console.log(response);
       const schedules = response.data;
@@ -99,9 +98,14 @@ function handleRequest(data) {
       schedules.sort(function (a, b) {
         if (Number(a.time.split(':')[0]) < Number(b.time.split(':')[0])) {
           return -1;
-        } else {
-          return true;
+        } else if (
+          Number(a.time.split(':')[0]) == Number(b.time.split(':')[0])
+        ) {
+          if (Number(a.time.split(':')[1]) < Number(b.time.split(':')[1])) {
+            return -1;
+          }
         }
+        return true;
       });
 
       const next = schedules.filter(function (schedule) {

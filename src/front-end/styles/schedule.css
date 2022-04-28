@@ -118,3 +118,49 @@ input:-webkit-autofill {
 input::placeholder {
   color: #666360;
 }
+
+.tooltip {
+  position: relative;
+}
+
+.tooltip span {
+  width: 160px;
+  background: #3ee64c;
+  padding: 8px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  transition: opacity 0.4s;
+  visibility: hidden;
+
+  position: absolute;
+  bottom: calc(100% + 12px);
+  left: 50%;
+  transform: translateX(-50%);
+  color: #312e38;
+}
+
+.tooltipVisible {
+  visibility: visible !important;
+}
+
+.erro {
+  background: #ee1a0b !important;
+  color: #fff !important;
+}
+.tooltip span::before {
+  content: '';
+  border-style: solid;
+  border-color: #3ee64c transparent;
+  border-width: 6px 6px 0 6px;
+  bottom: 20px;
+  top: 100%;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.tooltip span:hover span {
+  opacity: 1;
+  visibility: visible;
+}

@@ -16,6 +16,12 @@ router.get('/visual/schedules', (req: Request, res: Response) => {
   return res.sendFile(i);
 });
 
+router.get('/visual/about', (req: Request, res: Response) => {
+  const i = join(__dirname, 'front-end', 'pages', 'about.html');
+
+  return res.sendFile(i);
+});
+
 router.post('/schedules', async (req: Request, res: Response) => {
   const { name, date, time, type } = req.body;
 
