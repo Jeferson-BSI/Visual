@@ -118,7 +118,7 @@ function handleSchedule(schedule, index) {
                 />
                 <strong>${schedule.name}</strong>
               </div>
-                <button onclick="handleDelete(${index}, true)">
+                <button onclick="handleDelete(${index}, ${true})">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     x="0px"
@@ -216,7 +216,9 @@ function handleRequest(data) {
 // Delete Schedule
 function handleDelete(index, f = false) {
   const schedule = document.getElementById(index);
-
+  if (!index) {
+    return;
+  }
   axios
     .delete(
       `https://visual-web-1.herokuapp.com/schedules/${globalSchedules[index].id}`,
