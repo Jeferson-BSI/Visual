@@ -63,7 +63,7 @@ function handleRequest() {
     })
     .then(function (response) {
       tooltip.classList.add('tooltipVisible');
-      const inputs = [name, time, date, type];
+      const inputs = [name, time, type];
 
       inputs.forEach((input) => {
         input.value = '';
