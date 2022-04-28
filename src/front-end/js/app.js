@@ -175,8 +175,8 @@ function handleNextSchedule(schedules) {
   }
 }
 
-var url = 'http://localhost:3333/schedules/';
-// var url = 'https://visual-web-1.herokuapp.com/schedules/';
+// var url = 'http://localhost:3333/schedules/';
+var url = 'https://visual-web-1.herokuapp.com/schedules/';
 function handleRequest(data) {
   axios.get(url + `?date=${data}`).then(function (response) {
     console.log(response);
