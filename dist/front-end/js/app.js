@@ -17,7 +17,7 @@ const weekday = {
   4: 'Quinta-feira',
   5: 'Sexta-feira',
   6: 'Sábado-feira',
-}; // alert(String(date.getMonth()).padStart(2, '0'));
+};
 
 day.innerHTML = weekday[date.getDay()];
 month.innerHTML += String(date.getDate()).padStart(2, '0');
@@ -89,7 +89,6 @@ function handleRequest(data) {
   axios
     .get(`https://visual-web-1.herokuapp.com/schedules/?date=${data}`)
     .then(function (response) {
-      console.log(response);
       const schedules = response.data;
       schedules.sort(function (a, b) {
         if (Number(a.time.split(':')[0]) < Number(b.time.split(':')[0])) {
@@ -192,7 +191,3 @@ const pickDate = flatpickr('#date', {
     handleRequest(dateInput.value, true);
   },
 });
-
-function handleDelete() {
-  alert('Delete');
-}

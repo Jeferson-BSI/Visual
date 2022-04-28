@@ -179,7 +179,6 @@ function handleNextSchedule(schedules) {
 var url = 'https://visual-web-1.herokuapp.com/schedules/';
 function handleRequest(data) {
   axios.get(url + `?date=${data}`).then(function (response) {
-    console.log(response);
     const schedules = response.data;
 
     schedules.sort(function (a, b) {
@@ -216,7 +215,6 @@ function handleDelete(index, f = false) {
   }
 
   axios.delete(url + `${globalSchedules[index].id}`).then(function (response) {
-    console.log(response);
     globalSchedules.splice(index, 1);
 
     handleNextSchedule(globalSchedules);
