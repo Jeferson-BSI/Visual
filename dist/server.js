@@ -18,4 +18,4 @@ app.set('views', (0, _path.join)(__dirname, 'front-end')); // app.engine('html',
 
 app.set('view engine', 'html');
 app.use(_routes.router);
-app.listen(3333, () => console.log('Server running on port: http://localhost:3333'));
+app.listen(3333); // app.listen(process.env.PORT || 3000);

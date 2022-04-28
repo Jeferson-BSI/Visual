@@ -5,6 +5,9 @@ const name = document.getElementById('name');
 const type = document.getElementById('type');
 const time = document.getElementById('time');
 const date = document.getElementById('date');
+const tooltip = document.getElementById('tooltip');
+const erro = document.getElementById('erro');
+const h = new Date();
 const button = document.getElementById('agendar');
 
 function validation(value) {
@@ -23,6 +26,7 @@ type.addEventListener('focus', function (event) {
   validation(type);
 });
 time.addEventListener('focus', function (event) {
+  time.classList.remove('inputError');
   time.classList.add('valid');
 });
 const pickDate = flatpickr('#date', {
@@ -39,21 +43,55 @@ const pickTime = flatpickr('#time', {
   noCalendar: true,
   dateFormat: 'H:i',
   time_24hr: true
-});
+}); ///http://localhost:3333/schedules'
+// https://visual-web-1.herokuapp.com/schedules
 
 function handleRequest() {
-  axios.post('http://localhost:3333/schedules', {
+  axios.post('https://visual-web-1.herokuapp.com/schedules', {
     name: name.value,
     type: type.value,
     time: time.value,
     date: date.value
   }).then(function (response) {
-    console.log(response); // do whatever you want if console is [object object] then stringify the response
+    tooltip.classList.add('tooltipVisible');
+    const inputs = [name, time, date, type];
+    inputs.forEach(input => {
+      input.value = '';
+      input.classList.remove('inputError');
+      input.classList.remove('valid');
+    });
   });
 }
 
 bt.addEventListener('click', function (event) {
   event.preventDefault();
-  alert(name.value, type.value, time.value, date.value);
-  handleRequest();
+
+  if (name.value && name.value && time.value && date.value) {
+    if (Number(time.value.split(':')[0]) <= Number(h.getHours())) {
+      time.classList.remove('valid');
+      time.classList.add('inputError');
+      tooltip.innerHTML = 'Horário Invalido';
+      tooltip.classList.add('tooltipVisible');
+      tooltip.classList.add('erro');
+      setTimeout(function () {
+        tooltip.classList.remove('tooltipVisible');
+        tooltip.classList.remove('erro');
+        tooltip.innerHTML = 'Success';
+      }, 2000);
+      return;
+    }
+
+    handleRequest();
+  } else {
+    const inputs = [name, time, date, type];
+    inputs.forEach(input => {
+      if (!input.value) {
+        input.classList.add('inputError');
+      }
+    });
+  }
+
+  setTimeout(function () {
+    tooltip.classList.remove('tooltipVisible');
+  }, 2000);
 });

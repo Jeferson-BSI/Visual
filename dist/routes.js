@@ -21,6 +21,10 @@ router.get('/visual/schedules', (req, res) => {
   const i = (0, _path.join)(__dirname, 'front-end', 'pages', 'schedule.html');
   return res.sendFile(i);
 });
+router.get('/visual/about', (req, res) => {
+  const i = (0, _path.join)(__dirname, 'front-end', 'pages', 'about.html');
+  return res.sendFile(i);
+});
 router.post('/schedules', async (req, res) => {
   const {
     name,
@@ -38,7 +42,7 @@ router.post('/schedules', async (req, res) => {
   });
   return res.status(200).json(dados);
 });
-router.get('/schedules/', async (req, res) => {
+router.get('/schedules', async (req, res) => {
   const {
     date
   } = req.query;
