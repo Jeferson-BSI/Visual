@@ -76,7 +76,7 @@ function handleRequest() {
 bt.addEventListener('click', function (event) {
   event.preventDefault();
 
-  if (name.value && name.value && time.value && date.value) {
+  if (name.value && type.value && time.value && date.value) {
     if (Number(date.value.split(':')[0]) == Number(h.getDate())) {
       if (Number(time.value.split(':')[0]) <= Number(h.getHours())) {
         time.classList.remove('valid');
