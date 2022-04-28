@@ -217,7 +217,6 @@ function handleDelete(index, f = false) {
 
   axios.delete(url + `${globalSchedules[index].id}`).then(function (response) {
     console.log(response);
-    alert(index);
     globalSchedules.splice(index, 1);
 
     handleNextSchedule(globalSchedules);
