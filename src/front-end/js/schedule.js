@@ -52,7 +52,7 @@ const pickTime = flatpickr('#time', {
 // https://visual-web-1.herokuapp.com/schedules
 function handleRequest() {
   axios
-    .post('http://localhost:3333/schedules', {
+    .post('https://visual-web-1.herokuapp.com', {
       name: name.value,
       type: type.value,
       time: time.value,

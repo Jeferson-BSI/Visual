@@ -156,6 +156,7 @@ function handleSchedule(schedule, index) {
                 </button>
             </div>`;
 }
+
 // http://localhost:3333/schedules
 // https://visual-web-1.herokuapp.com/schedules/?date=${data}
 function handleNextSchedule(schedules) {
@@ -178,7 +179,7 @@ function handleNextSchedule(schedules) {
 
 function handleRequest(data) {
   axios
-    .get(`https://visual-web-1.herokuapp.com/schedules?date=${data}`)
+    .get(`http://localhost:3333/schedules?date=${data}`)
     .then(function (response) {
       console.log(response);
       const schedules = response.data;
