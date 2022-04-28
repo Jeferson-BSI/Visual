@@ -179,7 +179,7 @@ function handleNextSchedule(schedules) {
 
 function handleRequest(data) {
   axios
-    .get(`http://localhost:3333/schedules?date=${data}`)
+    .get(`https://visual-web-1.herokuapp.com/schedules/?date=${data}`)
     .then(function (response) {
       console.log(response);
       const schedules = response.data;
@@ -218,7 +218,9 @@ function handleDelete(index, f = false) {
   const schedule = document.getElementById(index);
 
   axios
-    .delete(`http://localhost:3333/schedules/${globalSchedules[index].id}`)
+    .delete(
+      `https://visual-web-1.herokuapp.com/schedules/${globalSchedules[index].id}`,
+    )
     .then(function (response) {
       console.log(response);
       globalSchedules.pop(index);
